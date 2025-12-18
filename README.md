@@ -161,6 +161,13 @@ A built-in prompt (`dotnet-ai-session`) is automatically exposed when connecting
 | [pinecone-dotnet-client](https://github.com/pinecone-io/pinecone-dotnet-client) | Pinecone | Pinecone vector DB client |
 | [qdrant-dotnet](https://github.com/qdrant/qdrant-dotnet)                        | Qdrant   | Qdrant vector DB client   |
 | [weaviate-dotnet-client](https://github.com/weaviate/weaviate-dotnet-client)    | Weaviate | Weaviate vector DB client |
+| [NRedisStack](https://github.com/redis/NRedisStack)                             | Redis    | Redis Stack .NET client   |
+
+### Local LLM & Utilities
+
+| Repository                                              | Owner     | Focus                      |
+| ------------------------------------------------------- | --------- | -------------------------- |
+| [OllamaSharp](https://github.com/awaescher/OllamaSharp) | awaescher | Ollama .NET client library |
 
 ---
 
