@@ -42,6 +42,43 @@
 
 ---
 
+## 💻 Running Locally
+
+### Prerequisites
+
+- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) (Preview)
+- [GitHub Personal Access Token](https://github.com/settings/tokens) (Classic or Fine-grained) with `repo` scope
+
+### Setup
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/yourusername/dotnet-mcp-server.git
+   cd dotnet-mcp-server/DotNetMCPServer
+   ```
+
+2. **Configure GitHub Token**
+   This project uses .NET User Secrets to keep your token safe.
+
+   ```bash
+   dotnet user-secrets init
+   dotnet user-secrets set "GitHub:Token" "your_github_token_here"
+   ```
+
+3. **Run the server**
+
+   ```bash
+   dotnet run
+   ```
+
+   The server will start at `http://localhost:5000` (or the port defined in `launchSettings.json`).
+
+4. **Connect your MCP Client**
+   Use `http://localhost:5000/mcp` as the endpoint for your MCP client (VS Code, Claude, etc.).
+
+---
+
 ## 🎯 The Problem & Solution
 
 ### The Problem
@@ -178,6 +215,29 @@ A built-in prompt (`dotnet-ai-session`) is automatically exposed when connecting
 | **Data Collection** | None. No prompts stored. No analytics.                         |
 | **File Access**     | Read-only. Only fetches public GitHub/Microsoft Learn content. |
 | **Authentication**  | No auth required                                               |
+
+## ⚡ Rate Limiting
+
+To ensure fair usage and service stability, this server implements IP-based rate limiting:
+
+| Limit Type         | Details                                                     |
+| ------------------ | ----------------------------------------------------------- |
+| **Requests/IP**    | 20 requests per minute per IP address                       |
+| **Window**         | 1 minute rolling window                                     |
+| **Queue**          | Up to 5 requests queued when limit reached                  |
+| **Response Code**  | `429 Too Many Requests` when exceeded                       |
+| **Retry After**    | 60 seconds                                                  |
+
+**Response when rate limit is exceeded:**
+```json
+{
+  "error": "Rate limit exceeded",
+  "message": "Too many requests. Please try again later.",
+  "retryAfter": "60 seconds"
+}
+```
+
+**Note:** Rate limits are applied per IP address. If you need higher limits for production use, consider self-hosting.
 
 ---
 
